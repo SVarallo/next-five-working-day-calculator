@@ -1,0 +1,17 @@
+{
+  "name": "loopin-backend-project",
+  "version": "0.0.1",
+  "description": "Utility to calculate the next five working days from any given date in format 'YYYY-MM-DD'",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^4.3.6"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Sam Varallo",
+  "license": "ISC"
+}
