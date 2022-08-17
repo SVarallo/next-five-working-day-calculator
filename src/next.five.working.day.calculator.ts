@@ -55,7 +55,8 @@ const isNotHoliday = (inputDate: Date): boolean => {
     /* Ideally I would call https://www.gov.uk/bank-holidays.json to also get bank holidays for greater holiday
        coverage. You would also need work to take into account things like Easter which changes every year
     */
-    return !((dayjs(inputDate).day() === holidays.christmasDay.day && dayjs(inputDate).month() === holidays.christmasDay.month) || (dayjs(inputDate).day() === holidays.newYearsDay.day && dayjs(inputDate).month() === holidays.newYearsDay.month));
+    return !((dayjs(inputDate).day() === holidays.christmasDay.day && dayjs(inputDate).month() === holidays.christmasDay.month) ||
+      (dayjs(inputDate).day() === holidays.newYearsDay.day && dayjs(inputDate).month() === holidays.newYearsDay.month));
 };
 
 console.log("The next five working days are: " + getNextFiveWorkingDays(new Date()));
