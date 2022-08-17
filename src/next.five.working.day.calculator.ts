@@ -1,40 +1,44 @@
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs';
 
-export const getNextFiveWorkingDays = (inputDate: Date): Date[] => {
-    const startDate = dayjs(inputDate);
-    let nextFiveWorkingDays: Date[] = [];
-    let dayToAdd = startDate.format('YYYY-MM-DD');
-    let numberOfDays = 5;
+export const getNextFiveWorkingDays = (today: Date): String[] => {
+    let nextFiveWorkingDays: String[] = [];
+    let dayToAdd: Date = dayjs(today).add(1,'day').toDate();
+    let numberOfDaysToAdd = 5;
 
-    while (numberOfDays > 0) {
-        if (checkDateIsValid(dayToAdd) && isWeekday(dayToAdd) && isNotHoliday(dayToAdd) === true) {
-            nextFiveWorkingDays.push(dayjs(dayToAdd).toDate());
+    while (numberOfDaysToAdd > 0) {
+        let formattedDate = dayjs(dayToAdd).format('YYYY-MM-DD')
+        if (checkDateIsValid(dayToAdd) && isWeekday(dayToAdd) && isNotHoliday(dayToAdd)) {
+            console.log('Current date ' + formattedDate + ' is a working day');
+            nextFiveWorkingDays.push(formattedDate);
+            numberOfDaysToAdd--;
+        } else {
+            console.log('Current date ' + formattedDate + ' is not a working day');
         }
-        dayjs(dayToAdd).add(1, 'day');
-        numberOfDays =- 1;
+
+        dayToAdd = dayjs(dayToAdd).add(1, 'day').toDate();
     }
 
     if (nextFiveWorkingDays.length === 5) {
         return nextFiveWorkingDays;
     } else {
-        throw new Error('Length of nextFiveWorkingDays array is: ' + nextFiveWorkingDays.length);
+        throw new Error('Error: Length of nextFiveWorkingDays array is ' + nextFiveWorkingDays.length);
     }
 }
 
-const checkDateIsValid = (dateToBeChecked: String): boolean => {
-  if (dayjs.isDayjs(dateToBeChecked)) {
-
-}
+const checkDateIsValid = (inputDate: Date): boolean => {
+    if (inputDate === undefined) {
+        throw new Error('Input date is undefined')
+    }
     return true
 }
 
-export const isWeekday = (inputDate: String): boolean => {
-    if (inputDate)
-    return true;
+const isWeekday = (inputDate: Date): boolean => {
+    let dayToTest: number = dayjs(inputDate).day()
+    return !(dayToTest == 6 || dayToTest == 0);
 }
 
-export const isNotHoliday = (inputDate: String): boolean => {
-    return true;
-}
+const isNotHoliday = (inputDate: Date): boolean => {
+    return !((dayjs(inputDate).day() === 25 && dayjs(inputDate).month() === 12) || (dayjs(inputDate).day() === 1 && dayjs(inputDate).month() === 1));
+};
 
-getNextFiveWorkingDays(new Date(2022-10-19));
+console.log("The next five working days are: " + getNextFiveWorkingDays(new Date()));
