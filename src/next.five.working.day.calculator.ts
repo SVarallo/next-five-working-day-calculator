@@ -1,10 +1,24 @@
 import dayjs from 'dayjs';
 
+const holidays = {
+    'christmasDay': {
+        day: 25,
+        month: 12
+    },
+    'newYearsDay': {
+        day: 1,
+        month: 1
+    },
+}
+
 export const getNextFiveWorkingDays = (today: Date): String[] => {
     let nextFiveWorkingDays: String[] = [];
     let dayToAdd: Date = dayjs(today).add(1,'day').toDate();
     let numberOfDaysToAdd = 5;
 
+    /* To change it to just figure out which of the next 5 days are working days it would be a case of reversing the
+       while to count up to 5 rather than down to 0
+    */
     while (numberOfDaysToAdd > 0) {
         let formattedDate = dayjs(dayToAdd).format('YYYY-MM-DD')
         if (checkDateIsValid(dayToAdd) && isWeekday(dayToAdd) && isNotHoliday(dayToAdd)) {
@@ -38,7 +52,10 @@ const isWeekday = (inputDate: Date): boolean => {
 }
 
 const isNotHoliday = (inputDate: Date): boolean => {
-    return !((dayjs(inputDate).day() === 25 && dayjs(inputDate).month() === 12) || (dayjs(inputDate).day() === 1 && dayjs(inputDate).month() === 1));
+    /* Ideally I would call https://www.gov.uk/bank-holidays.json to also get bank holidays for greater holiday
+       coverage. You would also need work to take into account things like Easter which changes every year
+    */
+    return !((dayjs(inputDate).day() === holidays.christmasDay.day && dayjs(inputDate).month() === holidays.christmasDay.month) || (dayjs(inputDate).day() === holidays.newYearsDay.day && dayjs(inputDate).month() === holidays.newYearsDay.month));
 };
 
 console.log("The next five working days are: " + getNextFiveWorkingDays(new Date()));
