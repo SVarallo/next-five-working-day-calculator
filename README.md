@@ -13,4 +13,5 @@ In order to run the service locally you will need the following:
 To checkout and build the service:
 
 1. Clone (https://github.com/SVarallo/next-five-working-day-calculator.git)
-2. Run 'npm run build'
+2. Run 'npm run build' to generate the dist
+3. Run 'node dist/src/next.five.working.day.calculator.js'
